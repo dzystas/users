@@ -30,6 +30,7 @@ class UserRequest extends FormRequest
             'salary' => ['required', 'numeric'],
             'hiring_time' => ['required'],
             'department_id' => ['required', 'integer','exists:departments,id'],
+            'image'     =>  'image|mimes:jpeg,png,jpg|max:2048|nullable'
         ];
     }
 }

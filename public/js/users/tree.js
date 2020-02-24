@@ -62,11 +62,11 @@ $(document).ready(function () {
             new_parent: data.parent,
             old_positions: old_positions,
             new_positions: new_positions
-        },function (response) {
-            if(response.success){
-                alert('Success! '+response.message);
-            }else{
-                alert('Error! '+response.message);
+        }, function (response) {
+            if (response.success) {
+                alert('Success! ' + response.message);
+            } else {
+                alert('Error! ' + response.message);
             }
 
         });
@@ -81,7 +81,7 @@ $(document).ready(function () {
             })
             .done(function (response) {
                 if (!response.success) {
-                    alert('Error! '+response.message);
+                    alert('Error! ' + response.message);
                     document.location.reload(true);
                 }
 
@@ -90,11 +90,12 @@ $(document).ready(function () {
                 data.instance.refresh();
             });
     });
+
     $('#tree').on("changed.jstree", function (e, data) {
         if (data.node) {
             console.log("select id №" + data.node.id);
             $('#input').removeClass('kt-hidden');
-            $('#id').html('Edit № '+data.node.id);
+            $('#id').html('Edit № ' + data.node.id);
             $('#title').html(data.node.text);
             $.get('/users/tree/get_user/' + data.node.id, {'id': data.node.id}, function (data) {
                 $('input[name="id"]').val(data.user.id);
@@ -103,25 +104,62 @@ $(document).ready(function () {
                 $('input[name="salary"]').val(data.user.salary);
                 $('select[name="department_id"]').val(data.user.department_id);
                 $('input[name="hiring_time"]').val(data.user.hiring_time);
-            })
+                $('input[name="image"]').val(null);
+                if (data.user.avatar) {
+                    $('#avatar-img').css({
+                        "backgroundImage": "url(http://test1.loc/storage/" + data.user.avatar + ")",
+                        "background-repeat": "no-repeat",
+                        "background-size": "contain",
+                        "padding-top": "100px"
+                    });
+                } else {
+                    $('#avatar-img').removeAttr("style");
+                }
+            });
+        }
+    });
+
+    $('#avatar').on('change', function (e) {
+        let files = e.target.files;
+
+        if (FileReader && files && files.length) {
+
+            let fr = new FileReader();
+            fr.onload = function () {
+                $('#avatar-img').css({
+                    "backgroundImage": "url(" + fr.result + ")",
+                    "background-repeat": "no-repeat",
+                    "background-size": "contain",
+                    "padding-top": "100px"
+                });
+            };
+            fr.readAsDataURL(files[0]);
         }
     });
 
     $('form').submit(function (e) {
         e.preventDefault();
-        $.post($(this).attr('action'), $(this).serialize(), function (response) {
-            if (response.success) {
-                alert('Success! '+response.message);
-                document.location.reload(true);
-            } else {
-                alert('Error! '+response.message);
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            enctype: 'multipart/form-data',
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
+                    alert('Success! ' + response.message);
+                    document.location.reload(true);
+                } else {
+                    alert('Error! ' + response.message);
+                }
             }
         }).fail(function (json) {
             var errors = [];
             $.each(JSON.parse(json.responseText).errors, function (e, obj) {
                 errors.push(obj);
             });
-            alert('Warning! '+errors);
+            alert('Warning! ' + errors);
         });
     })
 

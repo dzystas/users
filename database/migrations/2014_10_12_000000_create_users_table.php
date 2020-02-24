@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('parent_id')->index()->nullable();
             $table->tinyInteger('deep')->index()->nullable();
             $table->tinyInteger('position')->index()->nullable()->default(0);
+            $table->string('avatar')->index()->nullable();
             $table->timestamps();
         });
     }

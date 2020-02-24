@@ -9,9 +9,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-6">
-                                <form action="{{route('departments.store')}}" method="POST">
+                                <form action="{{route('departments.store')}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @include('departments.form')
+                                    <input type="file" name="image" class="form-control" multiple>
                                     <button type="submit" class="btn btn-success">Save</button>
                                 </form>
                             </div>

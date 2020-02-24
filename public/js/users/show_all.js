@@ -32,7 +32,18 @@ $(document).ready(function () {
                         return '';
                     }
                 },
-            }
+            },
+            {
+                data: 'avatar',
+                orderable: false,
+                render: function(data, type, row) {
+                    if (!$.isEmptyObject(row.avatar)) {
+                        return '<img src="http://test1.loc/storage/' + row.avatar + '" class="img-fluid" alt="Cinque Terre">';
+                    } else {
+                        return '';
+                    }
+                },
+            },
         ]
     });
 });

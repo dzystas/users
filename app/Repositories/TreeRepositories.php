@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Http\Requests\UserRequest;
-use App\Services\Admin\CpaSettings\ThemeSettingsService;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 final class TreeRepositories
 {
-
     public static function getData()
     {
         $parents = User::with(['children.children.children.children','department'])->where('deep',0)
@@ -73,23 +71,12 @@ final class TreeRepositories
         {
             $user = new User();
         }
-//        $success = false;
-//        if(!empty($request->file('logo'))){
-//            $success = ThemeSettingsService::storeConf($request->file('logo'), ThemeSettingsService::TYPE_LOGO);
-//        }
-
-        if (!empty($request->file('avatar')))
+        if ($request->hasFile('image'))
         {
-            $imgName = Storage::disk('public')->put('/users/avatar', $request->file('avatar'));
-            $user->avatar = $imgName;
+            $imgName = Storage::disk('public')->put('/users/avatar', $request->file('image'));
+            $user->avatar = $imgName??null;
         }
-        if($request->file('avatar')){
-            $file = $request->file('avatar');
 
-            $destinationPath = 'img/avatars';
-            $file->move($destinationPath,$file->getClientOriginalName());
-            $pathAvatar = $file->getRealPath();
-        }
         $user->full_name = $request->full_name;
         $user->email = $request->email;
         $user->parent_id = $request->parent_Id ?? 0;

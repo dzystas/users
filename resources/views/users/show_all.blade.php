@@ -17,6 +17,7 @@
                             <th> department</th>
                             <th> salary</th>
                             <th> hiring time</th>
+                            <th> avatar</th>
                         </tr>
                         </thead>
                     </table>
@@ -37,5 +38,5 @@
 @section('scripts')
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script src="/js/show_all.js"></script>
+    <script src="/js/users/show_all.js"></script>
 @endsection

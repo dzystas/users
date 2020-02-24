@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <form action="{{route('users.tree.create_update')}}" method="POST">
+                            <form action="{{route('users.tree.create_update')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="hidden" id="input">
                                     <div>
@@ -53,10 +53,13 @@
                                                 <input type="text" name="hiring_time" class="form-control" required>
                                                 <span class="exemple">exemple: 2001-11-23 11:11:11</span>
                                             </div>
+                                            <div class="col-md-12" id="avatar-img">
+                                            </div>
                                             <div class="form-group">
                                                 <lable>Ava:</lable>
-                                                <input type="file" name="avatar" class="form-control">
+                                                <input type="file" name="image" id="avatar"  class="form-control" multiple>
                                             </div>
+
                                             <div class="form-group">
                                                 <lable>Password*:</lable>
                                                 <input type="password" name="password" class="form-control" required>
@@ -89,7 +92,7 @@
 
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.9/jstree.min.js"></script>
-    <script src="/js/tree.js"></script>
+    <script src="/js/users/tree.js"></script>
 @endsection
 @section('styles')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.9/themes/default/style.min.css" rel="stylesheet" type="text/css"/>
