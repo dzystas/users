@@ -15,7 +15,7 @@ final class ShowRepositories
         $dirField = $request->order[0]['dir'];
 
         $query = User::with('department')->orderBy($sortField, $dirField);
-        $recordsFiltered = $query->get()->count();
+        $recordsTotal  = $query->get()->count();
 
         if (!empty($request['search']['value']))
         {
@@ -30,7 +30,7 @@ final class ShowRepositories
                 ->orWhere('salary', 'like' ,$someText)
                 ->orWhere('hiring_time', 'like' ,$someText);
         }
-        $recordsTotal =  $query->get()->count();
+        $recordsFiltered =  $query->get()->count();
         $data['data'] = $query->skip($request->start ?? 0)
             ->limit($request->length ?? 10)
             ->get();

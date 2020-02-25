@@ -45,13 +45,19 @@ $(document).ready(function () {
                 };
             }
         },
+        "massload": {
+            url: '@Url.Action("GetMassload", "Home")',
+            "data": function (ids) {
+                return { "ids": ids.join(',') };
+            }
+        },
         'plugins':
             [
                 "contextmenu",
                 "dnd",
                 "types",
                 "unique",
-                "conditionalselect"
+                "conditionalselect",
             ]
     }).bind("move_node.jstree", function (e, data) {
         let old_positions = data.old_instance._model.data[data.old_parent].children;

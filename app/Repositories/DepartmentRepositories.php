@@ -18,7 +18,7 @@ final class DepartmentRepositories
         $dirField = $request->order[0]['dir'];
 
         $query = Department::orderBy($sortField, $dirField);
-        $recordsFiltered = $query->get()->count();
+        $recordsTotal = $query->get()->count();
 
         if (!empty($request['search']['value']))
         {
@@ -26,7 +26,7 @@ final class DepartmentRepositories
             $query->orWhere('id','like' ,$someText)
                 ->orWhere('name', 'like' ,$someText);
         }
-        $recordsTotal =  $query->get()->count();
+        $recordsFiltered =  $query->get()->count();
         $data['data'] = $query->skip($request->start ?? 0)
             ->limit($request->length ?? 10)
             ->get();
